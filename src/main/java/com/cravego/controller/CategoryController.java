@@ -5,6 +5,7 @@ import com.cravego.dto.CategoryResponse;
 import com.cravego.payload.ApiResponse;
 import com.cravego.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,16 @@ public class CategoryController {
             summary = "Get category by ID",
             description = "Returns a category by its identifier."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Category found successfully"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Category not found"
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CategoryResponse>> findById(
             @PathVariable Long id) {
@@ -68,6 +79,20 @@ public class CategoryController {
             summary = "Create category",
             description = "Creates a new category."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "201",
+                    description = "Category created successfully"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "400",
+                    description = "Validation error"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Category not found"
+            )
+    })
     @PostMapping
     public ResponseEntity<ApiResponse<CategoryResponse>> save(
             @Valid @RequestBody CategoryRequest request) {
@@ -86,6 +111,16 @@ public class CategoryController {
             summary = "Update category",
             description = "Updates an existing category."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Category updated successfully"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Category not found"
+            )
+    })
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CategoryResponse>> update(
             @PathVariable Long id,
@@ -105,6 +140,16 @@ public class CategoryController {
             summary = "Delete category",
             description = "Deletes a category."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Category updated successfully"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Category not found"
+            )
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(
             @PathVariable Long id) {

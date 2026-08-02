@@ -5,6 +5,7 @@ import com.cravego.dto.ProductResponse;
 import com.cravego.entity.Category;
 import com.cravego.entity.Product;
 import com.cravego.exception.ResourceNotFoundException;
+import com.cravego.repository.CategoryRepository;
 import com.cravego.repository.ProductRepository;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -28,6 +29,9 @@ import static org.mockito.Mockito.*;
 class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
+
+    @Mock
+    private CategoryRepository categoryRepository;
 
     @InjectMocks
     private ProductServiceImpl productServiceImpl;
@@ -104,6 +108,9 @@ class ProductServiceImplTest {
                 .category(category)
                 .build();
 
+        when(categoryRepository.findById(1L))
+                .thenReturn(Optional.of(category));
+
         when(productRepository.save(any(Product.class)))
                 .thenReturn(saveProduct);
         ProductResponse response = productServiceImpl.save(request);
@@ -115,12 +122,29 @@ class ProductServiceImplTest {
         assertEquals(new BigDecimal("50000"), response.getPrice());
         assertEquals(23, response.getStock());
 
-        verify(productRepository, times(1))
-                .save(any(Product.class));
+        verify(categoryRepository).findById(1L);
+        verify(productRepository).save(any(Product.class));
+
+        ArgumentCaptor<Product> captor =
+                ArgumentCaptor.forClass(Product.class);
+
+        verify(productRepository).save(captor.capture());
+
+        Product captured = captor.getValue();
+
+        assertEquals(category.getId(), captured.getCategory().getId());
+        assertEquals("Comidas Rápidas", captured.getCategory().getName());
     }
 
     @Test
     void shouldUpdateProduct(){
+        Category existingCategory = Category.builder()
+                .id(1L)
+                .name("Hamburguesas")
+                .description("Normal")
+                .active(true)
+                .build();
+
         Product existingProduct = Product.builder()
                 .id(1L)
                 .name("Pizzas")
@@ -128,6 +152,7 @@ class ProductServiceImplTest {
                 .price(new BigDecimal("50000"))
                 .stock(23)
                 .available(true)
+                .category(existingCategory)
                 .build();
         ProductRequest request = new ProductRequest();
         request.setName("Pizzas");
@@ -135,7 +160,10 @@ class ProductServiceImplTest {
         request.setPrice(new BigDecimal("55000"));
         request.setStock(10);
         request.setAvailable(true);
+        request.setCategoryId(existingCategory.getId());
 
+        when(categoryRepository.findById(1L))
+                .thenReturn(Optional.of(existingCategory));
         when(productRepository.findById(1L))
                 .thenReturn(Optional.of(existingProduct));
         when(productRepository.save(any(Product.class)))
