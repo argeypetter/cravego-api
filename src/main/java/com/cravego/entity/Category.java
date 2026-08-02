@@ -1,4 +1,4 @@
-package entity;
+package com.cravego.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,15 +14,15 @@ import lombok.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long _id;
+    private Long id;
 
     @Column(nullable = false, length = 80, unique = true)
-    private String _name;
+    private String name;
 
     @Column(length = 255)
-    private String _description;
+    private String description;
 
     @Column(nullable = false)
-    private boolean _asset = true;
+    private boolean active = true;
 
 }

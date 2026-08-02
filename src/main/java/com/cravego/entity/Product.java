@@ -1,7 +1,10 @@
-package entity;
+package com.cravego.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "product")
 @Getter
@@ -13,27 +16,27 @@ import lombok.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int _id;
+    private Long id;
 
     @Column(nullable = false, length = 80, unique = true)
-    private String _name;
+    private String name;
 
     @Column(length = 255)
-    private String _description;
+    private String description;
 
     @Column(nullable = false)
-    private int _price;
+    private BigDecimal price;
 
     @Column(length = 255)
-    private String _imagen;
+    private String image;
 
     @Column(nullable = false)
-    private int _stock;
+    private int stock;
 
     @Column(nullable = false)
-    private boolean _available;
+    private boolean available;
 
-    @ManyToOne
-    @JoinColumn(name = "_id", nullable = false)
-    private Category _category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 }
