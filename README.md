@@ -30,6 +30,10 @@ Durante el desarrollo de CraveGo se aplicaron las siguientes buenas prácticas:
 - Paginación y ordenamiento.
 - Manejo global de excepciones.
 - Pruebas unitarias con JUnit 5 y Mockito.
+- Autenticación con JWT (Spring Security).
+- Registro y login de usuarios con roles (CUSTOMER / ADMIN).
+- Protección de endpoints por rol.
+- Secretos de configuración mediante variables de entorno (`.env`).
 
 ---
 
@@ -39,6 +43,8 @@ Durante el desarrollo de CraveGo se aplicaron las siguientes buenas prácticas:
 - Spring Boot
 - Spring Web
 - Spring Data JPA
+- Spring Security
+- JWT (jjwt)
 - MySQL
 - Maven
 - Lombok
@@ -138,41 +144,38 @@ Las pruebas cubren:
 - Actualización
 - Eliminación
 - Manejo de excepciones
+- Registro y login (autenticación)
+- Generación y validación de tokens JWT
 
 ---
 
 ## 🗺 Roadmap
 
-### ✅ Sprint 1
+### ✅ Sprint 1 — Base y CRUD
 
 - Configuración del proyecto
 - MySQL
 - JPA
-
-### ✅ Sprint 2
-
 - Categorías
-
-### ✅ Sprint 3
-
+- Productos
+- Relaciones JPA
 - DTO
 - Mapper
 - Validaciones
-
-### ✅ Sprint 4
-
 - Pruebas unitarias
 
-### ✅ Sprint 5
+### ✅ Sprint 2 — Autenticación y seguridad
 
-- Productos
-- Relaciones JPA
+- Spring Security
+- JWT (generación, validación y filtro de autenticación)
+- Registro y login de usuarios
+- Roles (CUSTOMER / ADMIN)
+- Protección de endpoints por rol
+- Manejo de errores de autenticación (401 / 409)
+- Configuración segura con variables de entorno (`.env`)
 
 ### 🚧 Próximamente
 
-- Spring Security
-- JWT
-- Roles
 - Docker
 - CI/CD
 - Despliegue en la nube
