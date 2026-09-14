@@ -155,51 +155,24 @@ Las pruebas cubren:
 
 ## 🗺 Roadmap
 
-### ✅ Sprint 1 — Base y CRUD
-
-- Configuración del proyecto
-- MySQL
-- JPA
-- Categorías
-- Productos
-- Relaciones JPA
-- DTO
-- Mapper
-- Validaciones
-- Pruebas unitarias
-
-### ✅ Sprint 2 — Autenticación y seguridad
-
-- Spring Security
-- JWT (generación, validación y filtro de autenticación)
-- Registro y login de usuarios
-- Roles (CUSTOMER / ADMIN)
-- Protección de endpoints por rol
-- Manejo de errores de autenticación (401 / 409)
-- Configuración segura con variables de entorno (`.env`)
-
-### ✅ Sprint 3 — Gestión de usuarios
-
-- CRUD de usuarios (listado, consulta, actualización y eliminación)
-- Activación / desactivación de cuentas
-- Asignación de roles por administración
-- Endpoints protegidos con rol ADMIN
-- Regla de negocio: impedir deshabilitar o eliminar la propia cuenta
-- Pruebas unitarias del servicio de usuarios
-
-### ✅ Sprint 4 — Gestión de restaurantes
-
-- CRUD de restaurantes (listado, consulta, creación, actualización y eliminación)
-- Endpoints de consulta públicos y de escritura protegidos con rol ADMIN
-- Validaciones de datos con Bean Validation
-- Pruebas unitarias del servicio de restaurantes
-
-### 🚧 Próximamente
-
-- Sprint 5 — Gestión de menú y productos por restaurante
-- Docker
-- CI/CD
-- Despliegue en la nube
+| Sprint        | Nombre                                         | Estado        |
+| ------------- | ---------------------------------------------- | ------------- |
+| **Sprint 1**  | 🛒 Gestión de productos y categorías           | ✅ Completado |
+| **Sprint 2**  | 🔐 Autenticación y seguridad                   | ✅ Completado |
+| **Sprint 3**  | 👤 Gestión de usuarios                         | ✅ Completado |
+| **Sprint 4**  | 🍔 Gestión de restaurantes                     | ✅ Completado |
+| **Sprint 5**  | 📋 Gestión de menú y productos por restaurante | ⏳ Pendiente  |
+| **Sprint 6**  | 🛍️ Carrito de compras                         | ⏳ Pendiente  |
+| **Sprint 7**  | 📦 Gestión de pedidos                          | ⏳ Pendiente  |
+| **Sprint 8**  | 💳 Pagos                                       | ⏳ Pendiente  |
+| **Sprint 9**  | 📍 Direcciones y seguimiento de pedidos        | ⏳ Pendiente  |
+| **Sprint 10** | ⭐ Reseñas y calificaciones                     | ⏳ Pendiente  |
+| **Sprint 11** | 🔔 Notificaciones                              | ⏳ Pendiente  |
+| **Sprint 12** | 📊 Administración y estadísticas               | ⏳ Pendiente  |
+| **Sprint 13** | 🧪 Testing y calidad                           | ⏳ Pendiente  |
+| **Sprint 14** | 📖 Documentación y API                         | ⏳ Pendiente  |
+| **Sprint 15** | 🐳 Dockerización y despliegue                  | ⏳ Pendiente  |
+| **Sprint 16** | 🚀 CI/CD y preparación para producción         | ⏳ Pendiente  |
 
 ---
 
