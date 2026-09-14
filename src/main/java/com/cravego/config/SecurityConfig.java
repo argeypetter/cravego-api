@@ -48,21 +48,28 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products/**")
                         .permitAll()
 
+                        // Restaurantes publicos: GET
+                        .requestMatchers(HttpMethod.GET, "/api/restaurants/**")
+                        .permitAll()
+
                         // Productos: solo ADMIN
-                        .requestMatchers(HttpMethod.POST, "/api/products/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.PUT, "/api/products/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.DELETE, "/api/products/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
 
                         // Users: solo ADMIN
                         .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+
+                        //Restaurants Solo Admin
+                        .requestMatchers(HttpMethod.POST, "/api/restaurants/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/restaurants/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/restaurants/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").hasRole("ADMIN")
 
                         // Todo lo demás requiere autenticación
                         .anyRequest().authenticated()

@@ -65,7 +65,7 @@ public class UserServiceImplTest {
                 ResourceNotFoundException.class,
                 () -> userService.findById(1L)
         );
-        
+
         assertEquals("User not found", exception.getMessage());
     }
 

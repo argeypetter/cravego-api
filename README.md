@@ -34,6 +34,7 @@ Durante el desarrollo de CraveGo se aplicaron las siguientes buenas prácticas:
 - Registro y login de usuarios con roles (CUSTOMER / ADMIN).
 - Protección de endpoints por rol.
 - Gestión de usuarios por administración (CRUD, activar/desactivar, roles).
+- Gestión de restaurantes (CRUD).
 - Secretos de configuración mediante variables de entorno (`.env`).
 
 ---
@@ -148,6 +149,7 @@ Las pruebas cubren:
 - Registro y login (autenticación)
 - Generación y validación de tokens JWT
 - Gestión de usuarios (CRUD y reglas de negocio)
+- Gestión de restaurantes (CRUD)
 
 ---
 
@@ -185,9 +187,16 @@ Las pruebas cubren:
 - Regla de negocio: impedir deshabilitar o eliminar la propia cuenta
 - Pruebas unitarias del servicio de usuarios
 
+### ✅ Sprint 4 — Gestión de restaurantes
+
+- CRUD de restaurantes (listado, consulta, creación, actualización y eliminación)
+- Endpoints de consulta públicos y de escritura protegidos con rol ADMIN
+- Validaciones de datos con Bean Validation
+- Pruebas unitarias del servicio de restaurantes
+
 ### 🚧 Próximamente
 
-- Sprint 4 — Gestión de restaurantes
+- Sprint 5 — Gestión de menú y productos por restaurante
 - Docker
 - CI/CD
 - Despliegue en la nube
