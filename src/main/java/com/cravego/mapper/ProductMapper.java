@@ -31,6 +31,8 @@ public final class ProductMapper {
                 .available(product.isAvailable())
                 .categoryId(product.getCategory().getId())
                 .categoryName(product.getCategory().getName())
+                .restaurantId(product.getRestaurant().getId())
+                .restaurantName(product.getRestaurant().getName())
                 .build();
     }
 

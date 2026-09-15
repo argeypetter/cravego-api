@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 public interface ProductService {
     Page<ProductResponse> findAll(Pageable pageable);
 
+    Page<ProductResponse> findByRestaurantId(Long restaurantId, Pageable pageable);
+
     ProductResponse findById(Long id);
 
     ProductResponse save(ProductRequest request);

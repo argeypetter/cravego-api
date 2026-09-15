@@ -17,4 +17,6 @@ public class ProductResponse {
     private boolean available;
     private Long categoryId;
     private String categoryName;
+    private Long restaurantId;
+    private String restaurantName;
 }

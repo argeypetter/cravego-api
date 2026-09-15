@@ -4,22 +4,30 @@ import com.cravego.dto.ProductRequest;
 import com.cravego.dto.ProductResponse;
 import com.cravego.entity.Category;
 import com.cravego.entity.Product;
+import com.cravego.entity.Restaurant;
 import com.cravego.exception.ResourceNotFoundException;
 import com.cravego.repository.CategoryRepository;
 import com.cravego.repository.ProductRepository;
 import static org.mockito.ArgumentMatchers.any;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.cravego.repository.RestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,8 +41,98 @@ class ProductServiceImplTest {
     @Mock
     private CategoryRepository categoryRepository;
 
+    @Mock
+    private RestaurantRepository restaurantRepository;
+
     @InjectMocks
     private ProductServiceImpl productServiceImpl;
+
+    @Test
+    void shouldFindMenu() {
+        Category category = Category.builder()
+                .id(1L)
+                .name("Comidas Rápidas")
+                .description("Categoría de comidas rápidas")
+                .active(true)
+                .build();
+
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1L)
+                .name("Paris")
+                .description("Calle")
+                .address("Calle 23")
+                .phone("3214567876")
+                .image("test")
+                .active(true)
+                .build();
+
+        ProductRequest request = ProductRequest.builder()
+                .name("Pizzas")
+                .description("Pizza intaliana")
+                .price(new BigDecimal("50000"))
+                .stock(23)
+                .available(true)
+                .categoryId(category.getId())
+                .restaurantId(restaurant.getId())
+                .build();
+
+        Product saveProduct = Product.builder()
+                .id(1L)
+                .name("Pizzas")
+                .description("Pizza intaliana")
+                .price(new BigDecimal("50000"))
+                .stock(23)
+                .available(true)
+                .category(category)
+                .restaurant(restaurant)
+                .build();
+
+        when(categoryRepository.findById(1L))
+                .thenReturn(Optional.of(category));
+
+        when(restaurantRepository.findById(1L))
+                .thenReturn(Optional.of(restaurant));
+
+        when(productRepository.save(any(Product.class)))
+                .thenReturn(saveProduct);
+        ProductResponse response = productServiceImpl.save(request);
+
+        assertNotNull(response);
+        assertEquals(1L, response.getId());
+        assertEquals("Pizzas", response.getName());
+        assertEquals("Pizza intaliana", response.getDescription());
+        assertEquals(new BigDecimal("50000"), response.getPrice());
+        assertEquals(23, response.getStock());
+
+        verify(categoryRepository).findById(1L);
+        verify(productRepository).save(any(Product.class));
+
+        ArgumentCaptor<Product> captor =
+                ArgumentCaptor.forClass(Product.class);
+
+        verify(productRepository).save(captor.capture());
+
+        Product captured = captor.getValue();
+
+        assertEquals(category.getId(), captured.getCategory().getId());
+        assertEquals("Comidas Rápidas", captured.getCategory().getName());
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+
+        when(productRepository.findByRestaurantId(1L, pageable))
+                .thenReturn(new PageImpl<>(List.of(saveProduct)));
+
+        Page<ProductResponse> result = productServiceImpl.findByRestaurantId(1L, pageable);
+
+        assertNotNull(result);
+        assertEquals(1, result.getTotalElements());
+        assertEquals("Pizzas", result.getContent().get(0).getName());
+        // + los relacionas: el restaurante del contenido == al consultado
+        assertEquals(restaurant.getId(), result.getContent().get(0).getRestaurantId());
+        verify(productRepository, times(1)).findByRestaurantId(1L, pageable);
+    }
 
     @Test
     void shouldFindProductById() {
@@ -42,6 +140,16 @@ class ProductServiceImplTest {
                 .id(1L)
                 .name("Comidas Rápidas")
                 .description("Categoría de comidas rápidas")
+                .active(true)
+                .build();
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1L)
+                .name("Paris")
+                .description("Calle")
+                .address("Calle 23")
+                .phone("3214567876")
+                .image("test")
                 .active(true)
                 .build();
 
@@ -53,6 +161,7 @@ class ProductServiceImplTest {
                 .stock(2)
                 .available(true)
                 .category(category)
+                .restaurant(restaurant)
                 .build();
         when(productRepository.findById(1L))
                 .thenReturn(Optional.of(product));
@@ -89,6 +198,17 @@ class ProductServiceImplTest {
                 .active(true)
                 .build();
 
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1L)
+                .name("Paris")
+                .description("Calle")
+                .address("Calle 23")
+                .phone("3214567876")
+                .image("test")
+                .active(true)
+                .build();
+
         ProductRequest request = ProductRequest.builder()
                 .name("Pizzas")
                 .description("Pizza intaliana")
@@ -96,6 +216,7 @@ class ProductServiceImplTest {
                 .stock(23)
                 .available(true)
                 .categoryId(category.getId())
+                .restaurantId(restaurant.getId())
                 .build();
 
         Product saveProduct = Product.builder()
@@ -106,10 +227,14 @@ class ProductServiceImplTest {
                 .stock(23)
                 .available(true)
                 .category(category)
+                .restaurant(restaurant)
                 .build();
 
         when(categoryRepository.findById(1L))
                 .thenReturn(Optional.of(category));
+
+        when(restaurantRepository.findById(1L))
+                .thenReturn(Optional.of(restaurant));
 
         when(productRepository.save(any(Product.class)))
                 .thenReturn(saveProduct);
@@ -145,6 +270,16 @@ class ProductServiceImplTest {
                 .active(true)
                 .build();
 
+        Restaurant existingRestaurant = Restaurant.builder()
+                .id(1L)
+                .name("Paris")
+                .description("Calle")
+                .address("Calle 23")
+                .phone("3214567876")
+                .image("test")
+                .active(true)
+                .build();
+
         Product existingProduct = Product.builder()
                 .id(1L)
                 .name("Pizzas")
@@ -153,6 +288,7 @@ class ProductServiceImplTest {
                 .stock(23)
                 .available(true)
                 .category(existingCategory)
+                .restaurant(existingRestaurant)
                 .build();
         ProductRequest request = new ProductRequest();
         request.setName("Pizzas");
@@ -161,9 +297,12 @@ class ProductServiceImplTest {
         request.setStock(10);
         request.setAvailable(true);
         request.setCategoryId(existingCategory.getId());
+        request.setRestaurantId(existingRestaurant.getId());
 
         when(categoryRepository.findById(1L))
                 .thenReturn(Optional.of(existingCategory));
+        when(restaurantRepository.findById(1L))
+                .thenReturn(Optional.of(existingRestaurant));
         when(productRepository.findById(1L))
                 .thenReturn(Optional.of(existingProduct));
         when(productRepository.save(any(Product.class)))

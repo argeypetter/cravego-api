@@ -161,4 +161,17 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<ApiResponse<Page<ProductResponse>>> findByRestaurant(
+            @PathVariable Long restaurantId,
+            @ParameterObject Pageable pageable) {
+        ApiResponse<Page<ProductResponse>> response =
+                ApiResponse.<Page<ProductResponse>>builder()
+                        .success(true)
+                        .message("Restaurant menu retrieved successfully.")
+                        .data(productService.findByRestaurantId(restaurantId, pageable))
+                        .build();
+        return ResponseEntity.ok(response);
+    }
+
 }

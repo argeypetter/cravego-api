@@ -161,7 +161,7 @@ Las pruebas cubren:
 | **Sprint 2**  | 🔐 Autenticación y seguridad                   | ✅ Completado |
 | **Sprint 3**  | 👤 Gestión de usuarios                         | ✅ Completado |
 | **Sprint 4**  | 🍔 Gestión de restaurantes                     | ✅ Completado |
-| **Sprint 5**  | 📋 Gestión de menú y productos por restaurante | ⏳ Pendiente  |
+| **Sprint 5**  | 📋 Gestión de menú y productos por restaurante | ✅ Completado |
 | **Sprint 6**  | 🛍️ Carrito de compras                         | ⏳ Pendiente  |
 | **Sprint 7**  | 📦 Gestión de pedidos                          | ⏳ Pendiente  |
 | **Sprint 8**  | 💳 Pagos                                       | ⏳ Pendiente  |

@@ -37,4 +37,7 @@ public class ProductRequest {
     @NotNull
     private Long categoryId;
 
+    @NotNull(message = "Restaurant is required.")
+    private Long restaurantId;
+
 }
